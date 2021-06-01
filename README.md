@@ -6,6 +6,12 @@ A new crypto currency for us penguins 🐧 because why not
 
 
 
+## Depencies
+
+* [Bottom](https://github.com/merlinfuchs/bottom-py)
+
+
+
 ## Resources
 
 * [FireShip YouTube video](https://www.youtube.com/watch?v=qF7dkrce-mQ)
