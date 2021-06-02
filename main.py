@@ -4,10 +4,13 @@ Synergize the scalable Quantum Machine Learn Blockchain technology to the moon s
 '''
 
 import random
+
+from rsa.key import PrivateKey, PublicKey
 from bottom import to_bottom, from_bottom # from the dependency (installed with `python3 setup.py install`)
 from datetime import datetime
 import hashlib
 import json
+import rsa
 
 
 class Transaction:
@@ -31,10 +34,12 @@ class Block:
     """
     A block in the blockchain
     """
+
     def __init__(self, previous_hash: str, transaction: Transaction):
         self.previous_hash = previous_hash
         self.transaction = transaction
         self.now = datetime.now()
+        self.nonce = random.randint(1000000000)
 
     def get_hash(self):
         block_string = json.dumps({
@@ -48,6 +53,9 @@ class Block:
 
         return current_hash.hexdigest()
 
+    def get_nonce(self) -> int:
+        return self.nonce
+
 
 class Chain:
     """
@@ -60,14 +68,38 @@ class Chain:
     def get_last_block(self) -> Block:
         return self.chain[len(self.chain) - 1]
 
-    def add_block(self, transaction: Transaction, sender_public_key: str, signature) -> None:
-        new_block = Block(self.get_last_block().get_hash(), transaction)
-        self.chain.append(new_block)
+    def mine(self):
+        solution = 0
+        print("Mining ⛏")
+        while True:
+            hash = hashlib
+            solution += 1
+
+    def add_block(self, transaction: Transaction, sender_public_key: str, signature: PublicKey) -> None:
+        is_valid = False
+
+        try:
+            rsa.verify(transaction.get_string().encode(), sender_public_key, signature)
+            is_valid = True
+        except:
+            pass
+
+        if is_valid:
+            new_block = Block(self.get_last_block().get_hash(), transaction)
+            self.mine(new_block.get_nonce())
+            self.chain.append(new_block)
+        else:
+            print("❌ Failed validation")
 
 class Wallet:
-    def __init__(self, public_key: str, private_key: str):
-        self.public_key = public_key
-        self.private_key = private_key
+    def __init__(self):
+        self.public_key, self.private_key = rsa.newkeys(2048, poolsize=8) # can change pool size later if need be
 
     def get_public_key(self) -> str:
-        return self.public_key
+        return str(hex(self.public_key.n))[2:] # remove hex indicator 
+
+    def send(self, chain: Chain, amount: float, payee_public_key: str):
+        transaction = Transaction(amount, self.public_key, payee_public_key)
+
+        signature = rsa.sign(transaction.get_string().encode(), self.private_key, "SHA-256")
+        chain.add_block(transaction, self.public_key, signature)
