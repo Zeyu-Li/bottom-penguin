@@ -20,4 +20,5 @@ jobs:
           packages: |
             rsa
       - run: |
+          python bottom/setup.py install
           python test/test.py
