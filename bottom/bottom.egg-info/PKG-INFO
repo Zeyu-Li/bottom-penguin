@@ -1,0 +1,15 @@
+Metadata-Version: 1.2
+Name: bottom
+Version: 0.0.1
+Summary: Pure python implementation of https://github.com/bottom-software-foundation/bottom-rs
+Home-page: https://github.com/bottom-software-foundation/bottom-py
+License: UNKNOWN
+Description: UNKNOWN
+Platform: UNKNOWN
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Intended Audience :: Developers
+Classifier: Topic :: Software Development :: Libraries
+Classifier: Topic :: Software Development :: Libraries :: Python Modules
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.0
