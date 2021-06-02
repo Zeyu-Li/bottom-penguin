@@ -20,6 +20,14 @@ A new crypto currency for us penguins 🐧 because why not 🥺👉👈
 
 
 
+## Coin
+
+Coin:
+
+![coin](img/coin.png)
+
+
+
 ## License
 
 [![ABRMS](https://img.shields.io/badge/License-ABRMS-blue.svg)](https://shields.io/)
