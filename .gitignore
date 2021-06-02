@@ -2,3 +2,4 @@
 img/bottom_penguin.ai
 bottom/*
 *.ai
+__pycache__/main.cpython-38.pyc

@@ -2,13 +2,14 @@
 
 ![bottom_penguin](C:\Users\zeyul\Documents\GitHub\bottom-penguin\img\bottom_penguin.svg)
 
-A new crypto currency for us penguins 🐧 because why not
+A new crypto currency for us penguins 🐧 because why not 🥺👉👈
 
 
 
-## Depencies
+## Dependencies
 
 * [Bottom](https://github.com/merlinfuchs/bottom-py)
+* [rsa](https://pypi.org/project/rsa/)
 
 
 
