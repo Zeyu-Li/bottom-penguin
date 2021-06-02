@@ -23,10 +23,11 @@ class Transaction:
         self.payee = payee
     
     def get_string(self) -> str:
-        current_transaction = dict()
-        current_transaction["amount"] = self.amount
-        current_transaction["payer"] = self.payer
-        current_transaction["payee"] = self.payee
+        current_transaction = {
+            "amount": self.amount,
+            "payer": self.payer,
+            "payee": self.payee
+        }
 
         return json.dumps(current_transaction)
 
@@ -39,7 +40,7 @@ class Block:
         self.previous_hash = previous_hash
         self.transaction = transaction
         self.now = datetime.now()
-        self.nonce = random.randint(1000000000)
+        self.nonce = random.randint(0, 1000000000)
 
     def get_hash(self):
         block_string = json.dumps({
@@ -62,24 +63,34 @@ class Chain:
     Start of the blockchain and the blockchain itself
     """
     def __init__(self):
-        genesis_block = Block(None, Transaction(1500, to_bottom("genesis"), to_bottom("pinguin0")))
+        genesis_block = Block(None, Transaction(1500, "genesis", "pinguin0"))
         self.chain = [genesis_block]
 
     def get_last_block(self) -> Block:
         return self.chain[len(self.chain) - 1]
 
-    def mine(self):
+    def mine(self, nonce: int):
         solution = 0
         print("Mining ⛏")
         while True:
-            hash = hashlib
+            current_hash = hashlib.sha256()
+            current_hash.update(str(nonce + solution))
+
+            attempt = current_hash.hexdigest()
+            
+            # if start with 4 0s then we are done
+            if (attempt[:4] == "0000"):
+                print(f"Solved with solution of {solution}")
+                return solution
+
             solution += 1
 
-    def add_block(self, transaction: Transaction, sender_public_key: str, signature: PublicKey) -> None:
+    def add_block(self, transaction: Transaction, sender_public_key: PublicKey, signature: bytes) -> None:
         is_valid = False
 
         try:
-            rsa.verify(transaction.get_string().encode(), sender_public_key, signature)
+            print("asdfsafsdf")
+            rsa.verify(transaction.get_string(), signature, sender_public_key)
             is_valid = True
         except:
             pass
@@ -87,13 +98,14 @@ class Chain:
         if is_valid:
             new_block = Block(self.get_last_block().get_hash(), transaction)
             self.mine(new_block.get_nonce())
+            # send for validation
             self.chain.append(new_block)
         else:
             print("❌ Failed validation")
 
 class Wallet:
-    def __init__(self):
-        self.public_key, self.private_key = rsa.newkeys(2048, poolsize=8) # can change pool size later if need be
+    def __init__(self, pool_size = 1):
+        (self.public_key, self.private_key) = rsa.newkeys(2048, poolsize=pool_size) # can change pool size later if need be
 
     def get_public_key(self) -> str:
         return str(hex(self.public_key.n))[2:] # remove hex indicator 
@@ -101,5 +113,5 @@ class Wallet:
     def send(self, chain: Chain, amount: float, payee_public_key: str):
         transaction = Transaction(amount, self.public_key, payee_public_key)
 
-        signature = rsa.sign(transaction.get_string().encode(), self.private_key, "SHA-256")
+        signature = rsa.sign(transaction.get_string(), self.private_key, "SHA-256")
         chain.add_block(transaction, self.public_key, signature)
