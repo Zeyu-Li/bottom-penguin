@@ -1,0 +1,20 @@
+
+name: Testing
+on: 
+  push:
+    branches:
+      - master
+
+jobs:
+  toPDF:
+    name: Testing Bottom Penguin
+    runs-on: ubuntu-latest
+    steps:
+      - name: Prepare repo
+        uses: actions/checkout@master
+      - uses: actions/setup-python@v2
+        with:
+          python-version: '3.8'
+      - run: |
+          pip3 install rsa
+          python test/test.py
