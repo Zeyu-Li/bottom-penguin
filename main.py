@@ -63,7 +63,7 @@ class Chain:
     Start of the blockchain and the blockchain itself
     """
     def __init__(self):
-        genesis_block = Block(None, Transaction(1500, "genesis", "pinguin0"))
+        genesis_block = Block(None, Transaction(1500, to_bottom("genesis"), to_bottom("pinguin0")))
         self.chain = [genesis_block]
 
     def get_last_block(self) -> Block:
