@@ -1,6 +1,6 @@
 # Bottom Penguin
 
-![bottom_penguin](./img\bottom_penguin.svg)
+![bottom-penguin](img/bottom-penguin.png)
 
 A new crypto currency for us penguins 🐧 because why not 🥺👉👈
 
