@@ -50,7 +50,7 @@ class Block:
         })
         # inits hash
         current_hash = hashlib.sha256()
-        current_hash.update(block_string.encode('utf-8'))
+        current_hash.update(block_string.encode())
 
         return current_hash.hexdigest()
 
@@ -74,7 +74,7 @@ class Chain:
         print("Mining ⛏")
         while True:
             current_hash = hashlib.sha256()
-            current_hash.update(str(nonce + solution))
+            current_hash.update(str(nonce + solution).encode())
 
             attempt = current_hash.hexdigest()
             
@@ -89,10 +89,9 @@ class Chain:
         is_valid = False
 
         try:
-            print("asdfsafsdf")
-            rsa.verify(transaction.get_string(), signature, sender_public_key)
+            rsa.verify(transaction.get_string().encode(), signature, sender_public_key)
             is_valid = True
-        except:
+        except Exception:
             pass
 
         if is_valid:
@@ -104,14 +103,19 @@ class Chain:
             print("❌ Failed validation")
 
 class Wallet:
+    """
+    Personal wallet
+    """
+
     def __init__(self, pool_size = 1):
-        (self.public_key, self.private_key) = rsa.newkeys(2048, poolsize=pool_size) # can change pool size later if need be
+        size = 2048
+        (self.public_key, self.private_key) = rsa.newkeys(size) # can change pool size later if need be
 
     def get_public_key(self) -> str:
         return str(hex(self.public_key.n))[2:] # remove hex indicator 
 
     def send(self, chain: Chain, amount: float, payee_public_key: str):
-        transaction = Transaction(amount, self.public_key, payee_public_key)
+        transaction = Transaction(amount, self.get_public_key(), payee_public_key)
 
-        signature = rsa.sign(transaction.get_string(), self.private_key, "SHA-256")
+        signature = rsa.sign(transaction.get_string().encode(), self.private_key, "SHA-256")
         chain.add_block(transaction, self.public_key, signature)

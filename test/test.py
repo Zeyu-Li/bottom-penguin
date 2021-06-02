@@ -27,7 +27,9 @@ def blockchain_test():
     penguin2 = Wallet()
 
     penguin0.send(bottom_penguin, 50, penguin1.get_public_key())
-    # penguin1.send(23, penguin2.get_public_key())
-    # penguin2.send(5, penguin1.get_public_key())
+    penguin1.send(bottom_penguin, 23, penguin2.get_public_key())
+    penguin2.send(bottom_penguin, 5, penguin1.get_public_key())
+
+    # print(bottom_penguin.get_last_block())
 
 blockchain_test()
