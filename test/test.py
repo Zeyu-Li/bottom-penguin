@@ -9,16 +9,19 @@ from bottom import to_bottom, from_bottom
 bottom_penguin = Chain()
 
 # unit tests
-def unit_test():
+def unit_tests():
     test_tran = Transaction(1500, to_bottom("genesis"), to_bottom("pinguin0"))
 
     print(test_tran.get_string())
 
+    assert test_tran.get_string() == '{"amount": 1500, "payer": "\ud83d\udc96\ud83d\udc96,,,\ud83d\udc49\ud83d\udc48\ud83d\udc96\ud83d\udc96,\ud83d\udc49\ud83d\udc48\ud83d\udc96\ud83d\udc96\u2728\ud83d\udc49\ud83d\udc48\ud83d\udc96\ud83d\udc96,\ud83d\udc49\ud83d\udc48\ud83d\udc96\ud83d\udc96\u2728\ud83e\udd7a\ud83d\udc49\ud83d\udc48\ud83d\udc96\ud83d\udc96\ud83e\udd7a\ud83d\udc49\ud83d\udc48\ud83d\udc96\ud83d\udc96\u2728\ud83e\udd7a\ud83d\udc49\ud83d\udc48", "payee": "\ud83d\udc96\ud83d\udc96\u2728,,\ud83d\udc49\ud83d\udc48\ud83d\udc96\ud83d\udc96\ud83e\udd7a\ud83d\udc49\ud83d\udc48\ud83d\udc96\ud83d\udc96\u2728\ud83d\udc49\ud83d\udc48\ud83d\udc96\ud83d\udc96,,,\ud83d\udc49\ud83d\udc48\ud83d\udc96\ud83d\udc96\u2728\ud83e\udd7a,,\ud83d\udc49\ud83d\udc48\ud83d\udc96\ud83d\udc96\ud83e\udd7a\ud83d\udc49\ud83d\udc48\ud83d\udc96\ud83d\udc96\u2728\ud83d\udc49\ud83d\udc48\u2728\u2728\u2728\u2728\ud83e\udd7a,,,\ud83d\udc49\ud83d\udc48"}', "Transaction error"
+
     test_block = Block(None, test_tran)
 
-    print(test_block.get_hash())
-
+    bottom_text = "💖💖,,,👉👈💖💖,👉👈💖💖✨👉👈💖💖,👉👈💖💖✨🥺👉👈💖💖🥺👉👈💖💖✨🥺👉👈"
     print(to_bottom("genesis"))
+
+    assert bottom_text == to_bottom("genesis"), "invalid bottom"
 
 # actual runs
 def blockchain_test():
@@ -32,4 +35,5 @@ def blockchain_test():
 
     # print(bottom_penguin.get_last_block())
 
-blockchain_test()
+unit_tests()
+# blockchain_test()
