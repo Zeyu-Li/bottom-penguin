@@ -89,6 +89,7 @@ class Chain:
         is_valid = False
 
         try:
+            # check if valid transaction
             rsa.verify(transaction.get_string().encode(), signature, sender_public_key)
             is_valid = True
         except Exception:
