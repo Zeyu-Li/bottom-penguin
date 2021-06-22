@@ -2,6 +2,8 @@
 
 ![bottom-penguin](img/bottom-penguin.png)
 
+![Build](https://github.com/Zeyu-Li/bottom-penguin/workflows/Testing/badge.svg)
+
 A new crypto currency for us penguins 🐧 because why not 🥺👉👈
 
 
