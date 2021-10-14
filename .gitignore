@@ -2,3 +2,5 @@
 img/bottom_penguin.ai
 *.ai
 __pycache__/main.cpython-38.pyc
+*.blend1
+TODO.md
